@@ -1,0 +1,40 @@
+name: Update content submodule
+
+on:
+  schedule:
+    - cron: '42 */6 * * *'  # Runs every 6 hours
+  workflow_dispatch:      # Allows manual triggering of the workflow
+
+jobs:
+  update-submodule:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the blog repository
+      uses: actions/checkout@v3
+      with:
+        submodules: true  # Fetch all submodules
+
+    - name: Update dict submodule
+      run: |
+        cd content
+        git fetch
+        LOCAL=$(git rev-parse @)
+        REMOTE=$(git rev-parse FETCH_HEAD)
+
+        if [ "$LOCAL" != "$REMOTE" ]; then
+          echo "Submodule has updates"
+          cd ..
+          git submodule update --remote content
+          git add content
+          git commit -m "Update `content` to latest commit ${REMOTE}."
+          git push
+        else
+          echo "No updates in `content`."
+        fi
+
+    - name: Push changes
+      if: success()
+      uses: ad-m/github-push-action@v0.8.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
