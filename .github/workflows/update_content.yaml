@@ -28,7 +28,6 @@ jobs:
           git submodule update --remote content
           git add content
           git commit -m "Update `content` to latest commit ${REMOTE}."
-          git push
         else
           echo "No updates in `content`."
         fi
