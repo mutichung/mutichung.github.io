@@ -15,6 +15,11 @@ jobs:
       with:
         submodules: true  # Fetch all submodules
 
+    - name: Set up Git user
+      run: |
+        git config --local user.name 'github-actions[bot]'
+        git config --local user.email 'github-actions[bot]@users.noreply.github.com'
+
     - name: Update dict submodule
       run: |
         cd content
