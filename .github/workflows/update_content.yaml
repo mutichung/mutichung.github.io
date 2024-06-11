@@ -35,7 +35,7 @@ jobs:
           git commit -m "Update content to latest commit ${REMOTE}."
         else
           echo "No updates in content."
-          exit 1
+          exit 0
         fi
 
     - name: Push changes
