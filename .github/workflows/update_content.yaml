@@ -21,6 +21,8 @@ jobs:
         git config --local user.email 'github-actions[bot]@users.noreply.github.com'
 
     - name: Update dict submodule
+      id: update_submodule
+      continue-on-error: true
       run: |
         cd content
         git fetch
@@ -35,11 +37,11 @@ jobs:
           git commit -m "Update content to latest commit ${REMOTE}."
         else
           echo "No updates in content."
-          exit 0
+          exit 1
         fi
 
     - name: Push changes
-      if: success()
+      if: steps.update_submodule.outcome == 'success'
       uses: ad-m/github-push-action@v0.8.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
