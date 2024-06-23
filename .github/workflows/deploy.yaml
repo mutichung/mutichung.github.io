@@ -5,6 +5,11 @@ on:
     branches:
       - v4
   workflow_dispatch:      # Allows manual triggering of the workflow
+  workflow_run:
+    workflows: ["Update content submodule"]
+    types: [completed]
+    branches: [v4]
+
 
 permissions:
   contents: read
