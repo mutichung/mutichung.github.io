@@ -5,7 +5,21 @@ import * as Component from "./quartz/components"
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
-  afterBody: [],
+  afterBody: [
+    Component.Comments({
+        provider: 'giscus',
+        options: {
+          // from data-repo
+          repo: 'mutichung/mutichung.github.io',
+          // from data-repo-id
+          repoId: 'R_kgDOMGmoGw',
+          // from data-category
+          category: 'Announcements',
+          // from data-category-id
+          categoryId: 'DIC_kwDOMGmoG84Cf9Iv',
+        }
+      }),
+  ],
   footer: Component.Footer({
     links: {
       GitHub: "https://github.com/mutichung",
@@ -34,15 +48,11 @@ export const defaultContentPageLayout: PageLayout = {
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
-  // afterBody: [
-  //   Component.Giscus(),
-  // ]
 }
 
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
-  // afterBody: [],
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
