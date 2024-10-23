@@ -21,8 +21,10 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        header: "Schibsted Grotesk",
-        body: "Source Sans Pro",
+        // header: "Schibsted Grotesk",
+        header: "Fira Code",
+        // body: "Source Sans Pro",
+        body: "Fira Code",
         code: "Fira Code",
       },
       colors: {
