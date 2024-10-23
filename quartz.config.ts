@@ -22,9 +22,9 @@ const config: QuartzConfig = {
       cdnCaching: true,
       typography: {
         // header: "Schibsted Grotesk",
-        header: "Fira Code",
+        header: "Inconsolata",
         // body: "Source Sans Pro",
-        body: "Fira Code",
+        body: "Inconsolata",
         code: "Fira Code",
       },
       colors: {
