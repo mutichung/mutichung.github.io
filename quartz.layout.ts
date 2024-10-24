@@ -27,6 +27,15 @@ export const sharedPageComponents: SharedLayout = {
   }),
 }
 
+const MyExplorer = () => {
+  Component.Explorer({
+    title: "Explorer", // title of the explorer component
+    folderClickBehavior: "link",
+    folderDefaultState: "collapsed",
+    useSavedState: true,
+  })
+}
+
 // components for pages that display a single page (e.g. a single note)
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
@@ -40,8 +49,8 @@ export const defaultContentPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
     Component.Darkmode(),
-    Component.DesktopOnly(Component.Explorer()),
-    Component.RecentNotes({title: "Recent Posts", limit: 5}),
+    Component.DesktopOnly(MyExplorer()),
+    Component.DesktopOnly(Component.RecentNotes({title: "Recent Posts", limit: 3})),
   ],
   right: [
     Component.Graph(),
@@ -58,8 +67,8 @@ export const defaultListPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
     Component.Darkmode(),
-    Component.DesktopOnly(Component.Explorer()),
-    Component.RecentNotes({title: "Recent Posts", limit: 5}),
+    Component.DesktopOnly(MyExplorer()),
+    Component.DesktopOnly(Component.RecentNotes({title: "Recent Posts", limit: 3})),
   ],
   right: [],
 }
