@@ -27,8 +27,8 @@ export const sharedPageComponents: SharedLayout = {
   }),
 }
 
-const MyExplorer = () => {
-  Component.Explorer({
+const MyExplorer = (): any => {
+  return Component.Explorer({
     title: "Explorer", // title of the explorer component
     folderClickBehavior: "link",
     folderDefaultState: "collapsed",
