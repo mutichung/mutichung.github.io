@@ -22,26 +22,26 @@ jobs:
 
     - name: Update dict submodule
       id: update_submodule
-      continue-on-error: true
       run: |
         cd content
         git fetch
         LOCAL=$(git rev-parse @)
         REMOTE=$(git rev-parse FETCH_HEAD)
-
         if [ "$LOCAL" != "$REMOTE" ]; then
           echo "Submodule has updates"
           cd ..
           git submodule update --remote content
           git add content
           git commit -m "Update content to latest commit ${REMOTE}."
+          echo "has_updates=true" >> $GITHUB_OUTPUT
         else
           echo "No updates in content."
-          exit 1
+          echo "has_updates=false" >> $GITHUB_OUTPUT
+          exit 1  # Fail the step (and job) when there are no updates
         fi
 
     - name: Push changes
-      if: steps.update_submodule.outcome == 'success'
+      if: steps.update_submodule.outputs.has_updates == 'true'
       uses: ad-m/github-push-action@v0.8.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
