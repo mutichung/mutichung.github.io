@@ -21,6 +21,7 @@
       # "vscodevim.vim"
       "mhutchie.git-graph"
       "zhuangtongfa.material-theme"
+      "GitHub.vscode-pull-request-github"
     ];
 
     # Enable previews
