@@ -7,18 +7,18 @@ export const sharedPageComponents: SharedLayout = {
   header: [],
   afterBody: [
     Component.Comments({
-        provider: 'giscus',
-        options: {
-          // from data-repo
-          repo: 'mutichung/mutichung.github.io',
-          // from data-repo-id
-          repoId: 'R_kgDOMGmoGw',
-          // from data-category
-          category: 'Announcements',
-          // from data-category-id
-          categoryId: 'DIC_kwDOMGmoG84Cf9Iv',
-        }
-      }),
+      provider: 'giscus',
+      options: {
+        // from data-repo
+        repo: 'mutichung/mutichung.github.io',
+        // from data-repo-id
+        repoId: 'R_kgDOMGmoGw',
+        // from data-category
+        category: 'Announcements',
+        // from data-category-id
+        categoryId: 'DIC_kwDOMGmoG84Cf9Iv',
+      }
+    }),
   ],
   footer: Component.Footer({
     links: {
@@ -50,7 +50,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Search(),
     Component.Darkmode(),
     Component.DesktopOnly(MyExplorer()),
-    Component.DesktopOnly(Component.RecentNotes({title: "Recent Posts", limit: 3})),
+    Component.DesktopOnly(Component.RecentNotes({ title: "Recent Posts", limit: 3 })),
   ],
   right: [
     Component.Graph(),
@@ -68,7 +68,7 @@ export const defaultListPageLayout: PageLayout = {
     Component.Search(),
     Component.Darkmode(),
     Component.DesktopOnly(MyExplorer()),
-    Component.DesktopOnly(Component.RecentNotes({title: "Recent Posts", limit: 3})),
+    Component.DesktopOnly(Component.RecentNotes({ title: "Recent Posts", limit: 3 })),
   ],
   right: [],
 }

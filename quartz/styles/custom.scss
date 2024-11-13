@@ -1,3 +1,40 @@
 @use "./base.scss";
 
 // put your custom CSS here!
+h1 {
+    color: var(--red)
+}
+
+h2 {
+    color: var(--orange)
+}
+
+h3 {
+    color: var(--yellow)
+}
+
+h4 {
+    color: var(--green)
+}
+
+h5 {
+    color: var(--blue)
+}
+
+h6 {
+    color: var(--purple)
+}
+
+// @font-face {
+//     font-family: 'UnifontGlyph';
+//     src: url('/static/fonts/unifont-16.0.01.otf') format('opentype');
+// }
+
+// @font-face {
+//     font-family: 'Cubic11';
+//     src: url('/static/fonts/Cubic-11-1.410/fonts/web/Cubic_11.woff2') format('woff2'),
+//          url('/static/fonts/Cubic-11-1.410/fonts/web/Cubic_11.woff') format('woff'),
+//          url('/static/fonts/Cubic-11-1.410/fonts/ttf/Cubic_11.ttf') format('truetype');
+//     font-weight: normal;
+//     font-style: normal;
+// }

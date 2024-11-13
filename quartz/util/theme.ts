@@ -8,6 +8,17 @@ export interface ColorScheme {
   tertiary: string
   highlight: string
   textHighlight: string
+  black: string
+  bg: string
+  fg: string
+  purple: string
+  green: string
+  orange: string
+  blue: string
+  yellow: string
+  cyan: string
+  red: string
+  grey: string
 }
 
 interface Colors {
@@ -51,6 +62,17 @@ ${stylesheet.join("\n\n")}
   --tertiary: ${theme.colors.lightMode.tertiary};
   --highlight: ${theme.colors.lightMode.highlight};
   --textHighlight: ${theme.colors.lightMode.textHighlight};
+  --black: ${theme.colors.lightMode.black};
+  --bg: ${theme.colors.lightMode.bg};
+  --fg: ${theme.colors.lightMode.fg};
+  --purple: ${theme.colors.lightMode.purple};
+  --green: ${theme.colors.lightMode.green};
+  --orange: ${theme.colors.lightMode.orange};
+  --blue: ${theme.colors.lightMode.blue};
+  --yellow: ${theme.colors.lightMode.yellow};
+  --cyan: ${theme.colors.lightMode.cyan};
+  --red: ${theme.colors.lightMode.red};
+  --grey: ${theme.colors.lightMode.grey};
 
   --headerFont: "${theme.typography.header}", ${DEFAULT_SANS_SERIF};
   --bodyFont: "${theme.typography.body}", ${DEFAULT_SANS_SERIF};
@@ -67,6 +89,17 @@ ${stylesheet.join("\n\n")}
   --tertiary: ${theme.colors.darkMode.tertiary};
   --highlight: ${theme.colors.darkMode.highlight};
   --textHighlight: ${theme.colors.darkMode.textHighlight};
+  --black: ${theme.colors.darkMode.black};
+  --bg: ${theme.colors.darkMode.bg};
+  --fg: ${theme.colors.darkMode.fg};
+  --purple: ${theme.colors.darkMode.purple};
+  --green: ${theme.colors.darkMode.green};
+  --orange: ${theme.colors.darkMode.orange};
+  --blue: ${theme.colors.darkMode.blue};
+  --yellow: ${theme.colors.darkMode.yellow};
+  --cyan: ${theme.colors.darkMode.cyan};
+  --red: ${theme.colors.darkMode.red};
+  --grey: ${theme.colors.darkMode.grey};
 }
 `
 }
