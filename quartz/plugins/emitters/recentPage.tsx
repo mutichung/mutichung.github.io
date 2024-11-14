@@ -1,53 +1,45 @@
 import { QuartzEmitterPlugin } from "../types"
 import { QuartzComponentProps } from "../../components/types"
-import { PageList } from "../../components/PageList"
 import HeaderConstructor from "../../components/Header"
 import BodyConstructor from "../../components/Body"
 import { pageResources, renderPage } from "../../components/renderPage"
 import { ProcessedContent, QuartzPluginData, defaultProcessedContent } from "../vfile"
-import { FullPageLayout, GlobalConfiguration } from "../../cfg"
+import { FullPageLayout } from "../../cfg"
+import path from "path"
 import {
   FilePath,
   FullSlug,
-  getAllSegmentPrefixes,
+  SimpleSlug,
+  stripSlashes,
   joinSegments,
   pathToRoot,
-  SimpleSlug,
+  simplifySlug,
 } from "../../util/path"
 import { defaultListPageLayout, sharedPageComponents } from "../../../quartz.layout"
-import RecentNotes, { Options as RecentNotesOption } from "../../components/RecentNotes"
+import { RecentContent, FolderContent } from "../../components"
 import { write } from "./helpers"
 import { i18n } from "../../i18n"
 import DepGraph from "../../depgraph"
 
-interface RecentPostsOptions extends FullPageLayout {
-  recentNotesOptions?: Partial<RecentNotesOption>,
+interface RecentPageOptions extends FullPageLayout {
+  showIndex?: boolean
 }
 
-const defaultRecentNotesOptions = (): Partial<RecentNotesOption> => ({
-  title: "",
-  limit: 10,
-  linkToMore: false,
-  showTags: true,
-})
-
-export const RecentPosts: QuartzEmitterPlugin<Partial<RecentPostsOptions>> = (userOpts) => {
-  const WideRecentNotes = RecentNotes({ ...defaultRecentNotesOptions(), ...userOpts?.recentNotesOptions })
-  WideRecentNotes.css = ((WideRecentNotes?.css ?? "") + (PageList?.css ?? ""))
+export const RecentPage: QuartzEmitterPlugin<Partial<RecentPageOptions>> = (userOpts) => {
+  const recentPageFilename = "recent"
   const opts: FullPageLayout = {
     ...sharedPageComponents,
     ...defaultListPageLayout,
-    pageBody: WideRecentNotes,
+    pageBody: RecentContent({ showIndex: userOpts?.showIndex }),
     ...userOpts,
   }
-  const recentPostsFilename = 'recent'
 
   const { head: Head, header, beforeBody, pageBody, afterBody, left, right, footer: Footer } = opts
   const Header = HeaderConstructor()
   const Body = BodyConstructor()
 
   return {
-    name: "RecentPosts",
+    name: "RecentPage",
     getQuartzComponents() {
       return [
         Head,
@@ -62,23 +54,9 @@ export const RecentPosts: QuartzEmitterPlugin<Partial<RecentPostsOptions>> = (us
         Footer,
       ]
     },
-    async getDependencyGraph(ctx, content, _resources) {
-      const graph = new DepGraph<FilePath>()
-      const recentPostsPagePath = joinSegments(ctx.argv.output, recentPostsFilename) as FilePath
-
-      for (const [_tree, file] of content) {
-        const sourcePath = file.data.filePath!
-        // Exclude files with "index" in their filename
-        if (!sourcePath.includes('index')) {
-          graph.addEdge(sourcePath, recentPostsPagePath)
-        }
-      }
-
-      return graph
-    },
     async emit(ctx, content, resources): Promise<FilePath[]> {
       const cfg = ctx.cfg.configuration
-      const slug = recentPostsFilename as FullSlug
+      const slug = recentPageFilename as FullSlug
       const externalResources = pageResources(pathToRoot(slug), resources)
       const vfileData = {
         slug,
@@ -94,7 +72,7 @@ export const RecentPosts: QuartzEmitterPlugin<Partial<RecentPostsOptions>> = (us
         cfg,
         children: [],
         tree: tree,
-        allFiles: content.map((contentData) => contentData[1].data).filter((data, _idx, _arr) => !data.filePath?.includes("index.md")),
+        allFiles: content.map((contentData) => contentData[1].data),
       }
 
       const page_content = renderPage(cfg, slug, componentData, opts, externalResources)
