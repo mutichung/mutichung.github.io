@@ -1,5 +1,6 @@
 import { QuartzEmitterPlugin } from "../types"
 import { QuartzComponentProps } from "../../components/types"
+import { PageList } from "../../components/PageList"
 import HeaderConstructor from "../../components/Header"
 import BodyConstructor from "../../components/Body"
 import { pageResources, renderPage } from "../../components/renderPage"
@@ -18,20 +19,28 @@ import RecentNotes, { Options as RecentNotesOption } from "../../components/Rece
 import { write } from "./helpers"
 import { i18n } from "../../i18n"
 import DepGraph from "../../depgraph"
-import { Node } from "hast"
 
 interface RecentPostsOptions extends FullPageLayout {
   recentNotesOptions?: Partial<RecentNotesOption>,
 }
 
+const defaultRecentNotesOptions = (): Partial<RecentNotesOption> => ({
+  title: "",
+  limit: 10,
+  linkToMore: false,
+  showTags: true,
+})
+
 export const RecentPosts: QuartzEmitterPlugin<Partial<RecentPostsOptions>> = (userOpts) => {
+  const WideRecentNotes = RecentNotes({ ...defaultRecentNotesOptions(), ...userOpts?.recentNotesOptions })
+  WideRecentNotes.css = ((WideRecentNotes?.css ?? "") + (PageList?.css ?? ""))
   const opts: FullPageLayout = {
     ...sharedPageComponents,
     ...defaultListPageLayout,
-    pageBody: RecentNotes(userOpts?.recentNotesOptions),
+    pageBody: WideRecentNotes,
     ...userOpts,
   }
-  const recentPostsFilename = 'recent_posts'
+  const recentPostsFilename = 'recent'
 
   const { head: Head, header, beforeBody, pageBody, afterBody, left, right, footer: Footer } = opts
   const Header = HeaderConstructor()
@@ -67,7 +76,7 @@ export const RecentPosts: QuartzEmitterPlugin<Partial<RecentPostsOptions>> = (us
 
       return graph
     },
-    async emit(ctx, _content, resources): Promise<FilePath[]> {
+    async emit(ctx, content, resources): Promise<FilePath[]> {
       const cfg = ctx.cfg.configuration
       const slug = recentPostsFilename as FullSlug
       const externalResources = pageResources(pathToRoot(slug), resources)
@@ -75,7 +84,7 @@ export const RecentPosts: QuartzEmitterPlugin<Partial<RecentPostsOptions>> = (us
         slug,
         text: "",
         description: "",
-        frontmatter: { title: "Recent Posts", tags: [] },
+        frontmatter: { title: "Recent", tags: [] },
       }
       const [tree, _vfile] = defaultProcessedContent(vfileData)
       const componentData: QuartzComponentProps = {
@@ -85,9 +94,9 @@ export const RecentPosts: QuartzEmitterPlugin<Partial<RecentPostsOptions>> = (us
         cfg,
         children: [],
         tree: tree,
-        allFiles: [],
+        allFiles: content.map((contentData) => contentData[1].data).filter((data, _idx, _arr) => !data.filePath?.includes("index.md")),
       }
-      // console.log(pathToRoot(slug))
+
       const page_content = renderPage(cfg, slug, componentData, opts, externalResources)
       const fp = await write({
         ctx,
