@@ -57,13 +57,13 @@ export const RecentPage: QuartzEmitterPlugin<Partial<RecentPageOptions>> = (user
     async emit(ctx, content, resources): Promise<FilePath[]> {
       const cfg = ctx.cfg.configuration
       const slug = recentPageFilename as FullSlug
-      const externalResources = pageResources(pathToRoot(slug), resources)
       const vfileData = {
         slug,
         text: "",
         description: "",
         frontmatter: { title: "Recent", tags: [] },
       }
+      const externalResources = pageResources(pathToRoot(slug), vfileData, resources)
       const [tree, _vfile] = defaultProcessedContent(vfileData)
       const componentData: QuartzComponentProps = {
         ctx,
