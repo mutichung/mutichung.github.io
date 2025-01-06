@@ -22,6 +22,7 @@
       "mhutchie.git-graph"
       "zhuangtongfa.material-theme"
       "GitHub.vscode-pull-request-github"
+      "esbenp.prettier-vscode"
     ];
 
     # Enable previews
