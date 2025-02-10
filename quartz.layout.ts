@@ -59,7 +59,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
     Component.Darkmode(),
-    Component.DesktopOnly(MyExplorer()),
+    MyExplorer(),
     Component.DesktopOnly(RecentNotesSidebar()),
   ],
   right: [
@@ -77,7 +77,7 @@ export const defaultListPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
     Component.Darkmode(),
-    Component.DesktopOnly(MyExplorer()),
+    MyExplorer(),
     Component.DesktopOnly(RecentNotesSidebar()),
   ],
   right: [],
