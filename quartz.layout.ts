@@ -1,6 +1,7 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
 import { QuartzPluginData } from "./quartz/plugins/vfile"
+import { SimpleSlug } from "./quartz/util/path"
 
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
@@ -28,14 +29,45 @@ export const sharedPageComponents: SharedLayout = {
   }),
 }
 
-const MyExplorer = (): any => {
-  return Component.Explorer({
-    title: "Explorer", // title of the explorer component
-    folderClickBehavior: "link",
-    folderDefaultState: "collapsed",
-    useSavedState: true,
+const explorer = Component.Explorer({
+  title: "Explorer", // title of the explorer component
+  folderClickBehavior: "link",
+  folderDefaultState: "collapsed",
+  useSavedState: true,
+})
+
+const recentNotes = [
+  Component.RecentNotes({
+    title: "🌳 Recent Trees",
+    limit: 4,
+    linkToMore: "trees/" as SimpleSlug,
+    filter: (f) =>
+      f.slug!.startsWith("blog/") && f.slug! !== "blog/index" && !f.frontmatter?.noindex,
+  }),
+  Component.RecentNotes({
+    title: "🌱 Recent Seedlings",
+    limit: 3,
+    linkToMore: "garden/" as SimpleSlug,
+    filter: (f) =>
+      f.slug!.startsWith("garden/") && !f.slug!.endsWith("index") &&!f.frontmatter?.noindex,
   })
-}
+]
+
+const left = [
+  Component.PageTitle(),
+  Component.MobileOnly(Component.Spacer()),
+  Component.Flex({
+    components: [
+      {
+        Component: Component.Search(),
+        grow: true,
+      },
+      { Component: Component.Darkmode() },
+    ],
+  }),
+  Component.DesktopOnly(explorer),
+  ...recentNotes.map((c) => Component.DesktopOnly(c)),
+]
 
 // components for pages that display a single page (e.g. a single note)
 export const defaultContentPageLayout: PageLayout = {
@@ -48,26 +80,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.ContentMeta(),
     Component.TagList(),
   ],
-  left: [
-    Component.PageTitle(),
-    Component.MobileOnly(Component.Spacer()),
-    Component.Flex({
-      components: [
-        {
-          Component: Component.Search(),
-          grow: true,
-        },
-        { Component: Component.Darkmode() },
-        { Component: Component.ReaderMode() },
-      ],
-    }),
-    MyExplorer(),
-    Component.RecentNotes({
-      title: "Recent Posts",
-      filter: ((f: QuartzPluginData) => !!f.frontmatter?.tags?.includes("post")),
-      linkToMore: "tags/post"
-    })
-  ],
+  left: left,
   right: [
     Component.Graph(),
     Component.DesktopOnly(Component.TableOfContents()),
@@ -78,24 +91,6 @@ export const defaultContentPageLayout: PageLayout = {
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
-  left: [
-    Component.PageTitle(),
-    Component.MobileOnly(Component.Spacer()),
-    Component.Flex({
-      components: [
-        {
-          Component: Component.Search(),
-          grow: true,
-        },
-        { Component: Component.Darkmode() },
-      ],
-    }),
-    MyExplorer(),
-    Component.RecentNotes({
-      title: "Recent Blog Posts",
-      filter: ((f: QuartzPluginData) => !!f.frontmatter?.tags?.includes("Blog")),
-      linkToMore: "tags/Blog"
-    })
-  ],
+  left: left,
   right: [],
 }
