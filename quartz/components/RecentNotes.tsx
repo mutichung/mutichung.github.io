@@ -8,7 +8,7 @@ import { GlobalConfiguration } from "../cfg"
 import { i18n } from "../i18n"
 import { classNames } from "../util/lang"
 
-export interface Options {
+interface Options {
   title?: string
   limit: number
   linkToMore: SimpleSlug | false

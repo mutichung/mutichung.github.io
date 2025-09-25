@@ -1,6 +1,5 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
-import { SimpleSlug } from "./quartz/util/path"
 
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
@@ -8,17 +7,17 @@ export const sharedPageComponents: SharedLayout = {
   header: [],
   afterBody: [
     Component.Comments({
-      provider: "giscus",
+      provider: 'giscus',
       options: {
         // from data-repo
-        repo: "mutichung/mutichung.github.io",
+        repo: 'mutichung/mutichung.github.io',
         // from data-repo-id
-        repoId: "R_kgDOMGmoGw",
+        repoId: 'R_kgDOMGmoGw',
         // from data-category
-        category: "Announcements",
+        category: 'Announcements',
         // from data-category-id
-        categoryId: "DIC_kwDOMGmoG84Cf9Iv",
-      },
+        categoryId: 'DIC_kwDOMGmoG84Cf9Iv',
+      }
     }),
   ],
   footer: Component.Footer({
@@ -37,15 +36,6 @@ const MyExplorer = (): any => {
   })
 }
 
-const RecentNotesSidebar = (): any => {
-  return Component.RecentNotes({
-    title: "Recent Posts",
-    limit: 3,
-    showTags: false,
-    linkToMore: "/recent" as SimpleSlug,
-    filter: (f) => !f.slug?.includes("index"),
-  })
-}
 // components for pages that display a single page (e.g. a single note)
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
@@ -71,7 +61,6 @@ export const defaultContentPageLayout: PageLayout = {
       ],
     }),
     MyExplorer(),
-    Component.DesktopOnly(RecentNotesSidebar()),
   ],
   right: [
     Component.Graph(),
@@ -96,7 +85,6 @@ export const defaultListPageLayout: PageLayout = {
       ],
     }),
     MyExplorer(),
-    Component.DesktopOnly(RecentNotesSidebar()),
   ],
   right: [],
 }
