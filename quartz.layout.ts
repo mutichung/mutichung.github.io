@@ -1,5 +1,6 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
+import { QuartzPluginData } from "./quartz/plugins/vfile"
 
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
@@ -61,6 +62,11 @@ export const defaultContentPageLayout: PageLayout = {
       ],
     }),
     MyExplorer(),
+    Component.RecentNotes({
+      title: "Recent Posts",
+      filter: ((f: QuartzPluginData) => !!f.frontmatter?.tags?.includes("post")),
+      linkToMore: "tags/post"
+    })
   ],
   right: [
     Component.Graph(),
@@ -85,6 +91,11 @@ export const defaultListPageLayout: PageLayout = {
       ],
     }),
     MyExplorer(),
+    Component.RecentNotes({
+      title: "Recent Blog Posts",
+      filter: ((f: QuartzPluginData) => !!f.frontmatter?.tags?.includes("Blog")),
+      linkToMore: "tags/Blog"
+    })
   ],
   right: [],
 }
