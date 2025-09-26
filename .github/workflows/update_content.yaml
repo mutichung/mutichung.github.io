@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         submodules: true  # Fetch all submodules
-        token: ${{ secrets.DICT_PAT }}
+        token: ${{ secrets.PAT }}
 
     - name: Set up Git user
       run: |
@@ -47,4 +47,4 @@ jobs:
       if: steps.update_submodule.outputs.has_updates == 'true'
       uses: ad-m/github-push-action@v0.8.0
       with:
-        github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        github_token: ${{ secrets.PAT }}
