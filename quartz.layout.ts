@@ -39,15 +39,17 @@ const explorer = Component.Explorer({
 const recentNotes = [
   Component.RecentNotes({
     title: "🌳 Recent Trees",
-    limit: 4,
+    limit: 2,
     linkToMore: "trees/" as SimpleSlug,
+    showTags: false,
     filter: (f) =>
       f.slug!.startsWith("blog/") && f.slug! !== "blog/index" && !f.frontmatter?.noindex,
   }),
   Component.RecentNotes({
     title: "🌱 Recent Seedlings",
-    limit: 3,
+    limit: 2,
     linkToMore: "garden/" as SimpleSlug,
+    showTags: false,
     filter: (f) =>
       f.slug!.startsWith("garden/") && !f.slug!.endsWith("index") &&!f.frontmatter?.noindex,
   })
