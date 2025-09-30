@@ -40,7 +40,7 @@ const recentNotes = [
   Component.RecentNotes({
     title: "🌳 Recent Trees",
     limit: 3,
-    linkToMore: "blog/" as SimpleSlug,
+    linkToMore: "forest/" as SimpleSlug,
     showTags: false,
     filter: (f) =>
       f.slug!.startsWith("forest/") && f.slug! !== "forest/index" && !f.frontmatter?.noindex,
