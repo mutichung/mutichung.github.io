@@ -43,7 +43,7 @@ const recentNotes = [
     linkToMore: "blog/" as SimpleSlug,
     showTags: false,
     filter: (f) =>
-      f.slug!.startsWith("blog/") && f.slug! !== "blog/index" && !f.frontmatter?.noindex,
+      f.slug!.startsWith("forest/") && f.slug! !== "forest/index" && !f.frontmatter?.noindex,
   }),
   Component.RecentNotes({
     title: "🌱 Recent Seedlings",
