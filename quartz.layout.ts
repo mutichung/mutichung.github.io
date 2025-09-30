@@ -39,8 +39,8 @@ const explorer = Component.Explorer({
 const recentNotes = [
   Component.RecentNotes({
     title: "🌳 Recent Trees",
-    limit: 2,
-    linkToMore: "trees/" as SimpleSlug,
+    limit: 3,
+    linkToMore: "blog/" as SimpleSlug,
     showTags: false,
     filter: (f) =>
       f.slug!.startsWith("blog/") && f.slug! !== "blog/index" && !f.frontmatter?.noindex,
@@ -68,7 +68,7 @@ const left = [
       { Component: Component.ReaderMode() },
     ],
   }),
-  Component.DesktopOnly(explorer),
+  // Component.DesktopOnly(explorer),
   ...recentNotes.map((c) => Component.DesktopOnly(c)),
 ]
 
