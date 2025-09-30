@@ -63,6 +63,7 @@ const left = [
         grow: true,
       },
       { Component: Component.Darkmode() },
+      { Component: Component.ReaderMode() },
     ],
   }),
   Component.DesktopOnly(explorer),
