@@ -21,10 +21,8 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        // header: "Schibsted Grotesk",
-        header: "Inconsolata",
-        // body: "Source Sans Pro",
-        body: "Inconsolata",
+        header: "Funnel Display",
+        body: "Funnel Sans",
         code: "Fira Code",
       },
       colors: {
@@ -51,7 +49,7 @@ const config: QuartzConfig = {
           grey: "#4d535eff",
         },
         darkMode: {
-          light: "#282c34",
+          light: "#1F2328",
           lightgray: "#393639",
           gray: "#646464",
           darkgray: "#d4d4d4",
@@ -83,12 +81,12 @@ const config: QuartzConfig = {
       }),
       Plugin.SyntaxHighlighting({
         theme: {
-          light: "github-light",
+          light: "one-light",
           dark: "one-dark-pro",
         },
-        keepBackground: false,
+        keepBackground: true,
       }),
-      Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: false }),
+      Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: true }),
       Plugin.GitHubFlavoredMarkdown(),
       Plugin.TableOfContents(),
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
